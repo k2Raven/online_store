@@ -18,3 +18,24 @@ class Product(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=7, verbose_name='Стоимость')
     image = models.URLField(verbose_name='Изображение')
     qty = models.PositiveIntegerField(default=1, verbose_name='Остаток')
+
+
+class Cart(models.Model):
+    product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE, related_name='products',
+                                verbose_name='Продукт')
+    qty = models.PositiveIntegerField(default=0, verbose_name='Количество')
+
+
+class Order(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Имя пользователя')
+    address = models.CharField(max_length=50, verbose_name='Адрес')
+    telephone = models.CharField(max_length=50, verbose_name='Телефон')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время добавления')
+    products = models.ManyToManyField('webapp.Product', related_name='orders', through='webapp.OrderProduct',
+                                      through_fields=('order', 'product'), verbose_name='Продукты')
+
+
+class OrderProduct(models.Model):
+    product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE, related_name='product_orders')
+    order = models.ForeignKey('webapp.Order', on_delete=models.CASCADE, related_name='order_products')
+    qty = models.PositiveIntegerField(verbose_name="Количество")
