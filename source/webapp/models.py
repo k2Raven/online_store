@@ -25,6 +25,13 @@ class Cart(models.Model):
                                 verbose_name='Продукт')
     qty = models.PositiveIntegerField(default=0, verbose_name='Количество')
 
+    @classmethod
+    def get_full_total(cls):
+        full_total = 0
+        for entry_in_cart in cls.objects.all():
+            full_total += entry_in_cart.qty * entry_in_cart.product.price
+        return full_total
+
 
 class Order(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя пользователя')

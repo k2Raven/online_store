@@ -13,7 +13,7 @@ class ProductAddToCartView(View):
     def get(self, request, *args, **kwargs):
         product = get_object_or_404(Product, id=kwargs['pk'])
         cart = request.session.get('cart', {})
-        {'1': 3, '2': 2, '3': 1}
+        # {'1': 3, '2': 2, '3': 1}
         if str(product.id) in cart:
             full_qty = cart[str(product.id)] + 1
         else:
