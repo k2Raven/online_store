@@ -52,4 +52,4 @@ class ProductsViewsTest(TestCase):
         response = self.client.post(f'/products/{product.pk}/update/', data=self.correct_data)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
         # print(Product.objects.count())
-        self.assertEqual(Product.objects.first().title, 'Product 1')
+        self.assertEqual(Product.objects.first().title, 'Product 2')
