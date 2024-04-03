@@ -19,8 +19,10 @@ jobs:
         python-version: "3.10"
     - name: Install Dependencies
       run: |
+        cp .env.test .env
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python source/manage.py test
+        cd source/
+        python manage.py test
